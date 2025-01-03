@@ -1,74 +1,74 @@
-% Bunun veri analizi ile ilgisi yok tabloyu aktarırken age sutünundaki 28.0 girilmiş yaşları 280 olarak yazmıştı düzelttim
-UPDATE ['Student Depression Dataset$'] SET Age = LEFT(Age ,2) WHERE İD >=30;
+% Bunun veri analizi ile ilgisi yok tabloyu aktarirken age sutÃ¼nundaki  28.0 girilmiÅŸ yaslari 280 olarak yazÄ±yordu, dÃ¼zelttim.
+UPDATE ['Student Depression Dataset$'] SET Age = LEFT(Age ,2) WHERE ID >=30;
 
 
-% Her bir cinsiyetteki öğrencilerin ortalama depresyon seviyesi nedir?
-% Depresyon veri setindeki cinsiyete göre depresyon seviyelerini analiz eder
+% Her bir cinsiyetteki Ã¶Ã°rencilerin ortalama depresyon seviyesi nedir?
+% Depresyon veri setindeki cinsiyete gÃ¶re depresyon seviyelerini analiz eder
 SELECT Gender,
-       AVG(Depression) AS Ortalama_Depresyon,
-       COUNT(*) AS Toplam_Veri
+Â  Â  Â  Â AVG(Depression) AS Ortalama_Depresyon,
+Â  Â  Â  Â COUNT(*) AS Toplam_Veri
 
-FROM ['Student Depression Dataset$'] 
-GROUP BY Gender;          
+FROM ['Student Depression Dataset$']Â 
+GROUP BY Gender;Â  Â  Â  Â  Â  
 
-%Depresyonda olan öğrencilerin öğrencilerin ortalama yaşı ?
+%Depresyonda olan Ã¶Ã°rencilerin Ã¶Ã°rencilerin ortalama yaÃ¾Ã½ ?
 
-SELECT AVG(Age) AS Ortalama_Yaş
+SELECT AVG(Age) AS Ortalama_YaÃ¾
 
-FROM ['Student Depression Dataset$'] WHERE Depression=1;   
+FROM ['Student Depression Dataset$'] WHERE Depression=1;Â  Â 
 
- 
-%yaş gruplarına göre sınıflandırarak, her yaş grubunda kaç öğrenci olduğunu ve kaç öğrencinin depresyonda olduğunu belirler
-%Her bir yaş grubunda kaç öğrenci depresyondadır? and Her bir yaş grubunda kaç öğrenci bulunmaktadır?
+Â 
+%yaÃ¾ gruplarÃ½na gÃ¶re sÃ½nÃ½flandÃ½rarak, her yaÃ¾ grubunda kaÃ§ Ã¶Ã°renci olduÃ°unu ve kaÃ§ Ã¶Ã°rencinin depresyonda olduÃ°unu belirler
+%Her bir yaÃ¾ grubunda kaÃ§ Ã¶Ã°renci depresyondadÃ½r? and Her bir yaÃ¾ grubunda kaÃ§ Ã¶Ã°renci bulunmaktadÃ½r?
 SELECT
    CASE
-        WHEN Age BETWEEN 18 AND 25 THEN '18-25'
-        WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-        ELSE '30 Üstü'
-    END AS Yasgrubu,
+Â  Â  Â  Â  WHEN Age BETWEEN 18 AND 25 THEN '18-25'
+Â  Â  Â  Â  WHEN Age BETWEEN 26 AND 30 THEN '26-30'
+Â  Â  Â  Â  ELSE '30 ÃœstÃ¼'
+Â  Â  END AS Yasgrubu,
 
-    COUNT(*) AS ToplamOgrenci,
-    SUM(Depression) AS DepresyondaOlanlar
+Â  Â  COUNT(*) AS ToplamOgrenci,
+Â  Â  SUM(Depression) AS DepresyondaOlanlar
 
 FROM ['Student Depression Dataset$']
 GROUP BY 
     CASE
         WHEN Age BETWEEN 18 AND 25 THEN '18-25'
         WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-        ELSE '30 Üstü'
+        ELSE '30 ÃœstÃ¼'
     END;
 
 
-%öğrencileri cinsiyet ve yaş gruplarına göre sınıflandırarak, her grup için çeşitli istatistiksel ölçümleri hesaplar.
-%Her bir cinsiyet ve yaş grubunda depresyon seviyesi ortalaması nedir,depresyon oranı nedir,kaç öğrenci depresyondadır ?
+%Ã¶Ã°rencileri cinsiyet ve yaÃ¾ gruplarÃ½na gÃ¶re sÃ½nÃ½flandÃ½rarak, her grup iÃ§in Ã§eÃ¾itli istatistiksel Ã¶lÃ§Ã¼mleri hesaplar.
+%Her bir cinsiyet ve yaÃ¾ grubunda depresyon seviyesi ortalamasÃ½ nedir,depresyon oranÃ½ nedir,kaÃ§ Ã¶Ã°renci depresyondadÃ½r ?
 
 SELECT
-    Gender, Yas_grubu,
+Â  Â  Gender, Yas_grubu,
     ROUND(AVG(Depression),2) AS Ortalama_Depresyon_Skoru,
 	ROUND((SUM(Depression) / COUNT(*)) * 100, 2) AS Depresyon_Yuzdesi,
 	SUM(Depression) AS Depresyonda_Olanlar,
 	COUNT(*) AS Toplam_Ogrenci
 FROM (
 
-    SELECT *,
+Â  Â  SELECT *,
         CASE
-            WHEN Age BETWEEN 18 AND 25 THEN '18-25'
+Â  Â  Â  Â  Â  Â  WHEN Age BETWEEN 18 AND 25 THEN '18-25'
             WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-			ELSE '30 Üstü'
-        END AS Yas_grubu
-    FROM ['Student Depression Dataset$']
+			ELSE '30 ÃœstÃ¼'
+Â  Â  Â  Â  END AS Yas_grubu
+Â  Â  FROM ['Student Depression Dataset$']
 ) AS subquery
 
 GROUP BY Gender, Yas_grubu
 ORDER BY Gender, Yas_grubu;
 
-%öğrencileri uyku süresi, çalışma memnuniyeti ve akademik baskı seviyelerine göre gruplandırarak, her bir grup için depresyon ile ilgili bazı istatistikleri hesaplar.
-%Uyku süresi, çalışma memnuniyeti ve akademik baskı, depresyon üzerinde nasıl bir etkisi vardır? andFarklı uyku sürelerine, çalışma memnuniyetine ve akademik baskı seviyelerine sahip öğrenci gruplarında depresyon oranları nasıl farklılık göstermektedir? 
+%Ã¶Ã°rencileri uyku sÃ¼resi, Ã§alÃ½Ã¾ma memnuniyeti ve akademik baskÃ½ seviyelerine gÃ¶re gruplandÃ½rarak, her bir grup iÃ§in depresyon ile ilgili bazÃ½ istatistikleri hesaplar.
+%Uyku sÃ¼resi, Ã§alÃ½Ã¾ma memnuniyeti ve akademik baskÃ½, depresyon Ã¼zerinde nasÃ½l bir etkisi vardÃ½r? andFarklÃ½ uyku sÃ¼relerine, Ã§alÃ½Ã¾ma memnuniyetine ve akademik baskÃ½ seviyelerine sahip Ã¶Ã°renci gruplarÃ½nda depresyon oranlarÃ½ nasÃ½l farklÃ½lÃ½k gÃ¶stermektedir? 
 SELECT
     CASE
         WHEN [Sleep Duration] = '5-6 hours' OR [Sleep Duration] = 'Less than 5 hours' THEN 'Az Uyuyanlar'
         WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
+        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
         ELSE 'Bilinmeyen'
     END AS Uyku,
     [Study Satisfaction],
@@ -82,18 +82,18 @@ GROUP BY
     CASE
         WHEN [Sleep Duration] = '5-6 hours' OR [Sleep Duration] = 'Less than 5 hours' THEN 'Az Uyuyanlar'
         WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
+        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
         ELSE 'Bilinmeyen'
     END;
 
--- çok uyuyup çok çalışma memnuiyeti olanların deprasyona girme yüzdesi
-%çalışma memnuniyeti, akademik baskı ve uyku süresinin etkileşimli olarak depresyon üzerindeki etkisini daha ayrıntılı olarak inceleme
+-- Ã§ok uyuyup Ã§ok Ã§alÃ½Ã¾ma memnuiyeti olanlarÃ½n deprasyona girme yÃ¼zdesi
+%Ã§alÃ½Ã¾ma memnuniyeti, akademik baskÃ½ ve uyku sÃ¼resinin etkileÃ¾imli olarak depresyon Ã¼zerindeki etkisini daha ayrÃ½ntÃ½lÃ½ olarak inceleme
 
 SELECT
     CASE
         WHEN [Sleep Duration] IN ('5-6 hours', 'Less than 5 hours') THEN 'Az Uyuyanlar'
         WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
+        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
         ELSE 'Bilinmeyen'
     END AS UykuKategorisi,
     [Study Satisfaction],
@@ -109,21 +109,21 @@ GROUP BY
 	CASE
         WHEN [Sleep Duration] IN ('5-6 hours', 'Less than 5 hours') THEN 'Az Uyuyanlar'
         WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
+        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
         ELSE 'Bilinmeyen'
     END
 ORDER BY [Study Satisfaction] ASC;
 
--- UYKU DÜZENLEİRNE GÖRE AZ çalışma memnuiyeti olanların deprasyona girme YÜZDESİ
-%Düşük çalışma memnuniyeti yaşayan öğrencilerin (Study Satisfaction < 30) uyku süreleri ve depresyon durumu arasındaki ilişkiyi analiz eder
-%Düşük çalışma memnuniyeti yaşayan öğrencilerin uyku süreleri ile depresyon oranları arasında nasıl bir ilişki vardır?
-%Düşük çalışma memnuniyeti yaşayan öğrencilerin uyku süreleri ile depresyonu arasındaki ilişkiyi daha detaylı incelemek için hangi uyku kategorisi daha dikkat çekicidir?
+-- UYKU DÃœZENLEÃRNE GÃ–RE AZ Ã§alÃ½Ã¾ma memnuiyeti olanlarÃ½n deprasyona girme YÃœZDESÃ
+%DÃ¼Ã¾Ã¼k Ã§alÃ½Ã¾ma memnuniyeti yaÃ¾ayan Ã¶Ã°rencilerin (Study Satisfaction < 30) uyku sÃ¼releri ve depresyon durumu arasÃ½ndaki iliÃ¾kiyi analiz eder
+%DÃ¼Ã¾Ã¼k Ã§alÃ½Ã¾ma memnuniyeti yaÃ¾ayan Ã¶Ã°rencilerin uyku sÃ¼releri ile depresyon oranlarÃ½ arasÃ½nda nasÃ½l bir iliÃ¾ki vardÃ½r?
+%DÃ¼Ã¾Ã¼k Ã§alÃ½Ã¾ma memnuniyeti yaÃ¾ayan Ã¶Ã°rencilerin uyku sÃ¼releri ile depresyonu arasÃ½ndaki iliÃ¾kiyi daha detaylÃ½ incelemek iÃ§in hangi uyku kategorisi daha dikkat Ã§ekicidir?
 
 SELECT
     CASE
         WHEN [Sleep Duration] IN ('5-6 hours', 'Less than 5 hours') THEN 'Az Uyuyanlar'
         WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
+        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
         ELSE 'Bilinmeyen'
     END AS UykuKategorisi,
     [Study Satisfaction],
@@ -133,48 +133,48 @@ SELECT
 FROM ['Student Depression Dataset$']
 WHERE [Study Satisfaction] < 30
 GROUP BY
-    CASE
-        WHEN [Sleep Duration] IN ('5-6 hours', 'Less than 5 hours') THEN 'Az Uyuyanlar'
-        WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
-        WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Çok Uyuyanlar'
-        ELSE 'Bilinmeyen'
-    END,
-    [Study Satisfaction]
-ORDER BY  [Study Satisfaction] ASC;
+Â  Â  CASE
+Â  Â  Â  Â  WHEN [Sleep Duration] IN ('5-6 hours', 'Less than 5 hours') THEN 'Az Uyuyanlar'
+Â  Â  Â  Â  WHEN [Sleep Duration] = '7-8 hours' THEN 'Yeterli Uyuyanlar'
+Â  Â  Â  Â  WHEN [Sleep Duration] = 'More than 8 hours' THEN 'Ã‡ok Uyuyanlar'
+Â  Â  Â  Â  ELSE 'Bilinmeyen'
+Â  Â  END,
+Â  Â  [Study Satisfaction]
+ORDER BYÂ  [Study Satisfaction] ASC;
 
 
---- ÇALIŞMA SAATLERİNE GÖRE DEPRESYONA GİRME YÜZDESİ
-%öğrencileri çalışma/çalışma saatlerine göre üç kategoriye ayırarak (Az,Orta,Çok) bu kategorilerdeki öğrencilerin depresyon oranlarını analiz eder
-%Farklı çalışma/çalışma saatlerine sahip öğrenci gruplarında depresyon oranları nasıl farklılık göstermektedir?
-%Çalışma/çalışma saatleri ile depresyon arasında nasıl bir ilişki vardır?
+--- Ã‡ALIÃMA SAATLERÃNE GÃ–RE DEPRESYONA GÃRME YÃœZDESÃ
+%Ã¶Ã°rencileri Ã§alÃ½Ã¾ma/Ã§alÃ½Ã¾ma saatlerine gÃ¶re Ã¼Ã§ kategoriye ayÃ½rarak (Az,Orta,Ã‡ok) bu kategorilerdeki Ã¶Ã°rencilerin depresyon oranlarÃ½nÃ½ analiz eder
+%FarklÃ½ Ã§alÃ½Ã¾ma/Ã§alÃ½Ã¾ma saatlerine sahip Ã¶Ã°renci gruplarÃ½nda depresyon oranlarÃ½ nasÃ½l farklÃ½lÃ½k gÃ¶stermektedir?
+%Ã‡alÃ½Ã¾ma/Ã§alÃ½Ã¾ma saatleri ile depresyon arasÃ½nda nasÃ½l bir iliÃ¾ki vardÃ½r?
 
 SELECT
     CASE
         WHEN [Work/Study Hours] < 50 THEN 'Az'
         WHEN [Work/Study Hours] >= 50 AND [Work/Study Hours] < 100 THEN 'Orta' 
-        WHEN [Work/Study Hours] >= 100 THEN 'Çok'
+        WHEN [Work/Study Hours] >= 100 THEN 'Ã‡ok'
         ELSE 'Bilinmeyen'
-    END AS Çalışma_Süresi_Kategorisi,
+    END AS Ã‡alÃ½Ã¾ma_SÃ¼resi_Kategorisi,
     ROUND((SUM(Depression) / COUNT(*)) * 100, 2) AS Depresyon_Yuzdesi,
     SUM(Depression) AS Depresyonda_Olanlar,
     COUNT(*) AS Toplam_Ogrenci
 FROM ['Student Depression Dataset$']
-GROUP BY 
+GROUP BYÂ 
     CASE
         WHEN [Work/Study Hours] < 50 THEN 'Az'
         WHEN [Work/Study Hours] >= 50 AND [Work/Study Hours] < 100 THEN 'Orta' 
-        WHEN [Work/Study Hours] >= 100 THEN 'Çok'
+        WHEN [Work/Study Hours] >= 100 THEN 'Ã‡ok'
         ELSE 'Bilinmeyen'
     END ;
 
-%Öğrencilerin diyet alışkanlıkları ile depresyon arasındaki ilişkiyi inceler.
-%Hangi diyet kategorisindeki öğrencilerin depresyon riski daha yüksek?
+%Ã–Ã°rencilerin diyet alÃ½Ã¾kanlÃ½klarÃ½ ile depresyon arasÃ½ndaki iliÃ¾kiyi inceler.
+%Hangi diyet kategorisindeki Ã¶Ã°rencilerin depresyon riski daha yÃ¼ksek?
 
 SELECT
     CASE
-	    WHEN [Dietary Habits] = 'Healthy' Then ' Sağlıklı'
-		WHEN [Dietary Habits] ='Unhealthy' Then ' Sağlıksız'
-		WHEN [Dietary Habits] ='Moderate' Then ' Orta derece sağlıklı'
+	    WHEN [Dietary Habits] = 'Healthy' Then ' SaÃ°lÃ½klÃ½'
+		WHEN [Dietary Habits] ='Unhealthy' Then ' SaÃ°lÃ½ksÃ½z'
+		WHEN [Dietary Habits] ='Moderate' Then ' Orta derece saÃ°lÃ½klÃ½'
 		ELSE 'Bilinmeyen'
 	END AS Diyet_Kategorisi,
 	ROUND((SUM(Depression) / COUNT(*)) * 100, 2) AS Depresyon_Yuzdesi,
@@ -183,43 +183,43 @@ SELECT
 FROM ['Student Depression Dataset$']
 GROUP BY 
     CASE
-	    WHEN [Dietary Habits] ='Healthy' Then ' Sağlıklı'
-		WHEN [Dietary Habits] ='Unhealthy' Then ' Sağlıksız'
-		WHEN [Dietary Habits] ='Moderate' Then ' Orta derece sağlıklı'
+	    WHEN [Dietary Habits] ='Healthy' Then ' SaÃ°lÃ½klÃ½'
+		WHEN [Dietary Habits] ='Unhealthy' Then ' SaÃ°lÃ½ksÃ½z'
+		WHEN [Dietary Habits] ='Moderate' Then ' Orta derece saÃ°lÃ½klÃ½'
 		ELSE 'Bilinmeyen'
 	END;
 
 
-%depresyona giren öğrencilerin intihar etme düşüncesi olmasıyla ilişkisi var mı?
+%depresyona giren Ã¶Ã°rencilerin intihar etme dÃ¼Ã¾Ã¼ncesi olmasÃ½yla iliÃ¾kisi var mÃ½?
 
 SELECT
     Depression,
 	COUNT(*) AS Toplam_Ogrenci,
-    SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) AS İntihar_Dusunenler,
-    ROUND((SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) * 100, 3) AS İntihar_Olasiligi
+    SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) AS Ãntihar_Dusunenler,
+    ROUND((SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) * 1.0 / COUNT(*)) * 100, 3) AS Ãntihar_Olasiligi
 FROM ['Student Depression Dataset$']
 WHERE Depression=1 
 GROUP BY Depression;
 
-%intihar etme düşüncesi olan öğrencilerin ortalama yaşı kaçtır?
+%intihar etme dÃ¼Ã¾Ã¼ncesi olan Ã¶Ã°rencilerin ortalama yaÃ¾Ã½ kaÃ§tÃ½r?
 SELECT
-    ROUND(AVG(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN Age END),2) AS İntihar_Dusunenlerin_Ortalama_Yasi
+    ROUND(AVG(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes' THEN Age END),2) AS Ãntihar_Dusunenlerin_Ortalama_Yasi
 FROM
     ['Student Depression Dataset$'];
 
 
 
 
-%intihar etme düşüncesi olan öğrencilerin hangi yaş gruplarında bu düşünce daha çok vardır ?
+%intihar etme dÃ¼Ã¾Ã¼ncesi olan Ã¶Ã°rencilerin hangi yaÃ¾ gruplarÃ½nda bu dÃ¼Ã¾Ã¼nce daha Ã§ok vardÃ½r ?
 
 SELECT
     CASE 
         WHEN Age BETWEEN 18 AND 25 THEN '18-25'
         WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-		ELSE '30 Üstü'
-    END AS Yas_grubu,
+		ELSE '30 ÃœstÃ¼'
+Â  Â  END AS Yas_grubu,
     
-    SUM(CASE WHEN [Have you ever had suicidal thoughts ?]= 'Yes' THEN 1 ELSE 0 END) AS İntihar_Dusunenler,
+    SUM(CASE WHEN [Have you ever had suicidal thoughts ?]= 'Yes' THEN 1 ELSE 0 END) AS Ãntihar_Dusunenler,
 	COUNT(*) AS Toplam_Ogrenci
 FROM
     ['Student Depression Dataset$']
@@ -227,15 +227,15 @@ GROUP BY
     CASE 
         WHEN Age BETWEEN 18 AND 25 THEN '18-25'
         WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-		ELSE '30 Üstü'
-    END;
+		ELSE '30 ÃœstÃ¼'
+Â  Â  END;
 
-% intihar etmeyi düşünmüş öğrencilerin akademik baskı ile ilişkisi
+% intihar etmeyi dÃ¼Ã¾Ã¼nmÃ¼Ã¾ Ã¶Ã°rencilerin akademik baskÃ½ ile iliÃ¾kisi
 SELECT
     [Academic Pressure],
     COUNT(*) AS Toplam_Ogrenci,
-    SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes'  THEN 1 ELSE 0 END) AS İntihar_Dusunenler,
-	ROUND((SUM(CASE WHEN  [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) AS İntiharı_Düşünme_Yuzdesi
+    SUM(CASE WHEN [Have you ever had suicidal thoughts ?] = 'Yes'  THEN 1 ELSE 0 END) AS Ãntihar_Dusunenler,
+	ROUND((SUM(CASE WHEN  [Have you ever had suicidal thoughts ?] = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) AS ÃntiharÃ½_DÃ¼Ã¾Ã¼nme_Yuzdesi
 FROM
      ['Student Depression Dataset$']
 GROUP BY
