@@ -17,7 +17,7 @@ SELECT AVG(Age) AS Ortalama_Yaş
 FROM ['Student Depression Dataset$'] WHERE Depression=1;   
 
  
-% yaş gruplarina göre siniflandirarak, her yaş grubunda kaç öğrenci olduğunu ve kaç öğrencinin depresyonda olduğunu belirler
+% Her yaş grubunda kaç öğrenci depresyondadır? ve Her yaş grubunda kaç öğrenci vardır? 
 
 SELECT
    CASE
@@ -166,7 +166,7 @@ GROUP BY 
     END ;
 
 
-%Hangi diyet kategorisindeki öðrencilerin depresyon riski daha yüksek?
+%Hangi diyet kategorisindeki öğrencilerin depresyon riski daha yüksek?
 
 SELECT
     CASE
