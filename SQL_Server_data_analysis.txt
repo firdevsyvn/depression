@@ -62,7 +62,8 @@ GROUP BY Gender, Yas_grubu
 ORDER BY Gender, Yas_grubu;
 
 
-% Uyku süresi, çalişma memnuniyeti ve akademik baski, depresyon üzerinde nasil bir etkisi vardir? ve Farkli uyku sürelerine, çalişma memnuniyetine ve akademik baski seviyelerine sahip öğrenci gruplarinda depresyon oranlari nasil farklilik göstermektedir? 
+% Uyku süresi, çalişma memnuniyeti ve akademik baski, depresyon üzerinde nasil bir etkisi vardir? ve Farkli uyku sürelerine, çalişma memnuniyetine ve
+akademik baski seviyelerine sahip öğrenci gruplarinda depresyon oranlari nasil farklilik göstermektedir? 
 
 SELECT
     CASE
