@@ -1,39 +1,42 @@
 AVG(Depression) AS Ortalama_Depresyon
-% depression değerleri 0 ve 1 lerden oluştuğu için AVG(Depression) ortalama depresyonu hesaplar
-%AS Ortalama_Depresyon  ise AVG(Depression) sonuçalarını Ortalama_Depresyon  sutünuna yazar
+% depression deÄŸerleri 0 ve 1 lerden oluÅŸtuÄŸu iÃ§in AVG(Depression) ortalama depresyonu hesaplar
+%AS Ortalama_Depresyon  ise AVG(Depression) sonuÃ§alarÄ±nÄ± Ortalama_Depresyon  sutÃ¼nuna yazar
 
 
 COUNT(*) AS Toplam_Veri
-% tablodaki toplam satır sayısını hesaplar ve sonucu Toplam_Veri adıyla bir sütun olarak döndürür.
+% tablodaki toplam satÄ±r sayÄ±sÄ±nÄ± hesaplar ve sonucu Toplam_Veri adÄ±yla bir sÃ¼tun olarak dÃ¶ndÃ¼rÃ¼r.
 
-AVG(Age) AS Ortalama_Yaş
-AVG(Age) Age nin ortalamsını bulur ve bu değerleri AS Ortalama_Yaş ile Ortalama_Yaş sutünuna ekler
+AVG(Age) AS Ortalama_YaÅŸ
+AVG(Age) Age nin ortalamsÄ±nÄ± bulur ve bu deÄŸerleri AS Ortalama_YaÅŸ ile Ortalama_YaÅŸ sutÃ¼nuna ekler
 
 FROM ['Student Depression Dataset$'] WHERE Depression=1
-Depression=1 olan  Student Depression Dataset$ tablosundaki öğrencilere işlem yapar.
+Depression=1 olan  Student Depression Dataset$ tablosundaki Ã¶ÄŸrencilere iÅŸlem yapar.
 
     CASE
-        WHEN Age BETWEEN 18 AND 25 THEN '18-25'
-        WHEN Age BETWEEN 26 AND 30 THEN '26-30'
-        ELSE '30 Üstü'
-    END AS Yasgrubu
-yapısı yaş 18 25 arasında olan öğrencileri 18-25 ,yaş 26 30 arasında olan öğrencileri 26-30,yaşı 30 üstü  olan öğrencileri 30 Üstü olarak sınıflar. ve bu sutünun ismine Yasgrubu der.
+Â  Â  Â  Â  WHEN Age BETWEEN 18 AND 25 THEN '18-25'
+Â  Â  Â  Â  WHEN Age BETWEEN 26 AND 30 THEN '26-30'
+Â  Â  Â  Â  ELSE '30 ÃœstÃ¼'
+Â  Â  END AS Yasgrubu
+yapÄ±sÄ± yaÅŸ 18 25 arasÄ±nda olan Ã¶ÄŸrencileri 18-25 ,yaÅŸ 26 30 arasÄ±nda olan Ã¶ÄŸrencileri 26-30,yaÅŸÄ± 30 Ã¼stÃ¼  olan Ã¶ÄŸrencileri 30 ÃœstÃ¼ olarak sÄ±nÄ±flar. ve bu sutÃ¼nun
+ismine Yasgrubu der.
 
 SUM(Depression) AS DepresyondaOlanlar
-Depresyonda_Olanlar adında yeni bir sütun oluşturur ve bu sütuna, o gruptaki tüm öğrencilerin depresyon değerlerinin toplamını atar.
+Depresyonda_Olanlar adÄ±nda yeni bir sÃ¼tun oluÅŸturur ve bu sÃ¼tuna, o gruptaki tÃ¼m Ã¶ÄŸrencilerin depresyon deÄŸerlerinin toplamÄ±nÄ± atar.
 
 ROUND(AVG(Depression),2) AS Ortalama_Depresyon_Skoru
-Depresyo sütunundaki değerlerin ortalamasını alır, bu ortalamayı iki ondalık basamağa yuvarlar ve sonucu Ortalama_Depresyon_Skoru adında yeni bir sütun olarak gösterir.
+Depresyo sÃ¼tunundaki deÄŸerlerin ortalamasÄ±nÄ± alÄ±r, bu ortalamayÄ± iki ondalÄ±k basamaÄŸa yuvarlar ve sonucu Ortalama_Depresyon_Skoru adÄ±nda yeni bir sÃ¼tun olarak
+gÃ¶sterir.
 
 ROUND((SUM(Depression) / COUNT(*)) * 100, 2) AS Depresyon_Yuzdesi
-Depresyon sütunundaki değerlerin toplamını alarak, bu toplamı satır sayısına bölerek ve sonucu yüzdeye çevirerek, depresyon yüzdesini hesaplar. Daha sonra bu değeri iki ondalık basamağa yuvarlar ve sonucu Depresyon_Yuzdesi adında yeni bir sütuna atar.
+Depresyon sÃ¼tunundaki deÄŸerlerin toplamÄ±nÄ± alarak, bu toplamÄ± satÄ±r sayÄ±sÄ±na bÃ¶lerek ve sonucu yÃ¼zdeye Ã§evirerek, depresyon yÃ¼zdesini hesaplar. Daha sonra bu 
+deÄŸeri iki ondalÄ±k basamaÄŸa yuvarlar ve sonucu Depresyon_Yuzdesi adÄ±nda yeni bir sÃ¼tuna atar.
 
 AS subquery
-İç sorguyu bir isimle etiketleyerek, dış sorguda bu iç sorguya daha kolay ve anlaşılır bir şekilde referans vermemizi sağlar.
+Ä°Ã§ sorguyu bir isimle etiketleyerek, dÄ±ÅŸ sorguda bu iÃ§ sorguya daha kolay ve anlaÅŸÄ±lÄ±r bir ÅŸekilde referans vermemizi saÄŸlar.
 
 
 ASC
-tabloyu artan sırayla yazar.
+tabloyu artan sÄ±rayla yazar.
 
 
 
